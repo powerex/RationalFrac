@@ -5,7 +5,9 @@
 #include "Frac.h"
 #include <algorithm>
 #include <stdio.h>
-#include <sys/sysinfo.h>
+//#include <sys/sysinfo.h> // Unix
+#include <Windows.h> // Windows
+
 
 using namespace std;
 

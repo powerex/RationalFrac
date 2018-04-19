@@ -7,8 +7,6 @@
 
 using namespace std;
 
-
-
 int main() {
 
     VectorFrac vf;

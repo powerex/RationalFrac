@@ -22,10 +22,21 @@ unsigned long VectorFrac::size() {
 }
 
 VectorFrac VectorFrac::copyFrom(VectorFrac &source, unsigned int n) {
+
+    unsigned long free;
+    //* Windows
+    MEMORYSTATUS info;
+    GlobalMemoryStatus(&info);
+    free = info.dwAvailPhys;
+    //*/
+
+    /* Unix
     struct sysinfo info;
     sysinfo(&info);
-    unsigned long mem = source.vec.size() * sizeof(Frac);;
-    if (mem > info.freeram)
+    free = info.freeramж
+    //*/
+    unsigned long mem = source.vec.size() * sizeof(Frac);
+    if (mem > free)
         throw MemoryLimitException("copyFrom", "too big vector");
     //printf("Обсяг доступної пам\'яті: %lu (%lu MB)\n", info.freeram, info.freeram/(1024*1024));
     vector<Frac> tmp = source.vec;
