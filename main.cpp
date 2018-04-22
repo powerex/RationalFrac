@@ -54,18 +54,10 @@ int main() {
     return 0;
 }*/
 
-#include <stdio.h>
 
-#if defined(__linux__) // any linux distribution
-#define PLATFORM "linux"
-#elif defined(_WIN32) // any windows system
-#define PLATFORM "windows"
-#else
-    #define PLATFORM "Is not linux or windows"
-#endif
 
 
 int main(int argc, char *argv[]) {
-    puts(PLATFORM);
+
     return 0;
 }

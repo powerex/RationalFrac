@@ -8,8 +8,19 @@
 #include <iostream>
 #include "MemoryLimitException.h"
 #include "Functions.h"
-#include <sys/sysinfo.h> // Unix
-//#include <Windows.h> // Windows
+
+#include <stdio.h>
+
+#if defined(__linux__) // any linux distribution
+    #define PLATFORM "linux"
+    #include <sys/sysinfo.h>
+#elif defined(_WIN32) // any windows system
+    #define PLATFORM "windows"
+    #include <Windows.h>
+#else
+    #define PLATFORM "Is not linux or windows"
+#endif
+
 #include <functional>
 
 using namespace std;
@@ -72,17 +83,18 @@ template <class T>
 VectorFrac<T> VectorFrac<T>::copyFrom(VectorFrac<T> &source, unsigned int n) {
 
     unsigned long free;
-    /* Windows
+
+#if PLATFORM == "windows"
     MEMORYSTATUS info;
     GlobalMemoryStatus(&info);
     free = info.dwAvailPhys;
-    //*/
-
-    //* Unix
+#eldif PLATFORM == "linux"
     struct sysinfo info;
     sysinfo(&info);
     free = info.freeram;
     //*/
+#endif
+
     unsigned long mem = source.vec.size() * sizeof(T);
     if (mem > free)
         throw MemoryLimitException("copyFrom", "too big vector");
