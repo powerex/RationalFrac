@@ -43,5 +43,11 @@ VectorFrac VectorFrac::copyFrom(VectorFrac &source, unsigned int n) {
     sort(tmp.begin(), tmp.begin()+n);
     return tmp;
 }
+//
+//void VectorFrac::addWithFunction(unsigned int n, function func) {
+//    for (unsigned int i=0; i<n; i++) {
+//        add(func());
+//    }
+//}
 
 
