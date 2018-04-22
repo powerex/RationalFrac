@@ -1,21 +1,21 @@
-/*
 #include "Frac.h"
 #include "VectorFrac.h"
 
 using namespace std;
 
-mt19937* gen;
+mt19937 gen = mt19937(time(nullptr));
 
 Frac randomFrac() {
-    return {gen->()%10, static_cast<unsigned int>(gen->() % 9 + 1)};
+    return Frac(gen()%10, static_cast<unsigned int>(gen() % 9 + 1));
 }
+
 //
 //Frac concreteFrac(long n, unsigned int d) {
 //    return Frac(n, d);
 //}
 
 int main() {
-    gen = new mt19937(static_cast<unsigned long>(time(nullptr)));
+//    gen = new mt19937(static_cast<unsigned long>(time(nullptr)));
 
     ExtenderFracs concreteFrac(3, 8);
 
@@ -50,14 +50,6 @@ int main() {
     ext(vf, a1, a2, a3);
     vf.out();
 
-    delete gen;
-    return 0;
-}*/
-
-
-
-
-int main(int argc, char *argv[]) {
-
+//    delete gen;
     return 0;
 }

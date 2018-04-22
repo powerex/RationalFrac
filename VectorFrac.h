@@ -84,13 +84,13 @@ VectorFrac<T> VectorFrac<T>::copyFrom(VectorFrac<T> &source, unsigned int n) {
 
     unsigned long free;
 
-#if PLATFORM == "windows"
+#if defined(_WIN32)
     MEMORYSTATUS info;
     GlobalMemoryStatus(&info);
     free = info.dwAvailPhys;
 #endif
 
-#if PLATFORM == "linux"
+#if defined(__linux__)
     struct sysinfo info;
     sysinfo(&info);
     free = info.freeram;
