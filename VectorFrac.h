@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "MemoryLimitException.h"
+#include "Functions.h"
 #include <sys/sysinfo.h> // Unix
 //#include <Windows.h> // Windows
 #include <functional>
@@ -30,8 +31,8 @@ public:
     static VectorFrac copyFrom(VectorFrac& source, unsigned int n);
 
     void add(T f);
-    //void addWithFunction(unsigned int n, function func);
     void extendWithFunction(int n, T (*generator)(void)); // передача функції як параметр через вказівник на функцію
+    void extendWithClassFunction(int n, ExtenderFracs extender); // передача функції як параметр через вказівник на функцію
     T& operator[] (unsigned int index);
     unsigned long size();
     void out();
@@ -97,6 +98,14 @@ void VectorFrac<T>::extendWithFunction(int n, T (*generator)(void)) {
     }
 }
 
+
+template<class T>
+void VectorFrac<T>::extendWithClassFunction(int n, ExtenderFracs extender) {
+    for (int i=0; i<n; i++) {
+        this->add(extender());
+    }
+}
+
 template <class T>
 void VectorFrac<T>::out() {
     for (auto i=0; i<vec.size(); i++) {
@@ -109,7 +118,18 @@ vector<T>* VectorFrac<T>::getVec() {
     return &vec;
 }
 
-Frac randomFrac() {
-    return Frac(rand()%10, rand()%9+1);
+// template function to batch addition
+template<typename E, typename... T>
+void ext(VectorFrac<E>& container, const T&... args) {
+    for (auto&& p : std::initializer_list<Frac>{args...})
+        container.add(p);
 }
+
+template<typename... T>
+void f(const T&... args) {
+    for (auto&& p : std::initializer_list<Frac>{args...})
+        std::cout <<  p.getNumerator() << '/' << p.getDenomionator() << '\t';
+}
+
+
 #endif //RATIONALFRAC_VECTORFRAC_H

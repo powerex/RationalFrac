@@ -5,8 +5,22 @@
 #include <algorithm>
 #include <stdarg.h>
 #include <iostream>
+#include "Frac.h"
 
 
+class ExtenderFracs {
+private:
+    long n;
+    unsigned int d;
+public:
+    ExtenderFracs(long n, unsigned int d): n(n), d(d) {}
+
+    inline Frac operator()(void) {
+        return Frac(n, d);
+    }
+};
+
+/*
 template <class T>
 void extender(std::vector<T> container, int argc, ...) {
     va_list args;
@@ -14,17 +28,6 @@ void extender(std::vector<T> container, int argc, ...) {
         container.push_back(va_arg(args, T));
     }
     va_end(args);
-}
-
-
-/*
-void tt(int n, int ... argv) {
-
-    int* v = &argv;
-    while(n--) {
-        std::cout << v[1] << " ";
-    }
-    std::cout << std::endl;
 }
 */
 

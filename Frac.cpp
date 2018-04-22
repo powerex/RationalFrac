@@ -1,7 +1,7 @@
 #include "Frac.h"
 #include "AriphmeticException.h"
 
-Frac::Frac(unsigned int numerator, long denomionator) : numerator(numerator), denomionator(denomionator) {
+Frac::Frac(long numerator, unsigned int denomionator) : numerator(numerator), denomionator(denomionator) {
     if (denomionator == 0) {
         throw AriphmeticException("Frac constructor");
     }

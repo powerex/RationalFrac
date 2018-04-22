@@ -13,7 +13,7 @@ private:
     unsigned long gcd(unsigned long a, unsigned long b);
     void simplify();
 public:
-    Frac(unsigned int numerator, long denomionator);
+    Frac(long numerator, unsigned int denomionator);
 
     unsigned int getNumerator() const;
 

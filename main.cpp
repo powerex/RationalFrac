@@ -2,22 +2,22 @@
 #include <vector>
 #include "Frac.h"
 #include "VectorFrac.h"
+#include "Functions.h"
 
 using namespace std;
 
-template<typename... T>
-void f(const T&... args) {
-    for (auto&& p : std::initializer_list<Frac>{args...})
-        cout << p.getNumerator() << '/' << p.getDenomionator() << '\t';
+Frac randomFrac() {
+    return Frac(rand()%10, rand()%9+1);
 }
-
-template<typename E, typename... T>
-void ext(VectorFrac<E>& container, const T&... args) {
-    for (auto&& p : std::initializer_list<Frac>{args...})
-        container.add(p);
-}
+//
+//Frac concreteFrac(long n, unsigned int d) {
+//    return Frac(n, d);
+//}
 
 int main() {
+    srand(time(NULL));
+
+    ExtenderFracs concreteFrac(3, 8);
 
     VectorFrac<Frac> vf;
     vf.add(Frac(2,4));
@@ -35,8 +35,13 @@ int main() {
 //    cout << "copy\n";
 //    vf.out();
 
-//    vf.extendWithFunction(2, randomFrac);
-//    vf.out();
+    cout << "\n ===== pointer func ===== \n";
+    vf.extendWithFunction(2, randomFrac);
+    vf.out();
+
+    cout << "\n ===== pointer func ===== \n";
+    vf.extendWithClassFunction(1, concreteFrac);
+    vf.out();
 
     cout << "\n ===== \n";
     Frac a1(7,11);
@@ -44,9 +49,6 @@ int main() {
     Frac a3(3,7);
     ext(vf, a1, a2, a3);
     vf.out();
-
-    cout << endl;
-    f(Frac{11, 12}, Frac{22, 23});
 
     return 0;
 }
