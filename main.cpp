@@ -1,20 +1,25 @@
 #include <iostream>
 #include <vector>
 #include "Frac.h"
-#include "MemoryLimitException.h"
-#include "MyException.h"
 #include "VectorFrac.h"
-#include "Functions.h"
 
 using namespace std;
 
-Frac randomFrac() {
-    return Frac(rand()%10, rand()%9+1);
+template<typename... T>
+void f(const T&... args) {
+    for (auto&& p : std::initializer_list<Frac>{args...})
+        cout << p.getNumerator() << '/' << p.getDenomionator() << '\t';
+}
+
+template<typename E, typename... T>
+void ext(VectorFrac<E>& container, const T&... args) {
+    for (auto&& p : std::initializer_list<Frac>{args...})
+        container.add(p);
 }
 
 int main() {
 
-    VectorFrac vf;
+    VectorFrac<Frac> vf;
     vf.add(Frac(2,4));
     vf.add(Frac(1,3));
     vf.add(Frac(1,5));
@@ -37,9 +42,11 @@ int main() {
     Frac a1(7,11);
     Frac a2(5,7);
     Frac a3(3,7);
-    extender(vf.getVec(), 3, a1, a2, a3);
+    ext(vf, a1, a2, a3);
     vf.out();
 
+    cout << endl;
+    f(Frac{11, 12}, Frac{22, 23});
 
     return 0;
 }
