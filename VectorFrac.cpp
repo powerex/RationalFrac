@@ -1,3 +1,4 @@
+#include <iostream>
 #include "VectorFrac.h"
 #include "MemoryLimitException.h"
 
@@ -24,16 +25,16 @@ unsigned long VectorFrac::size() {
 VectorFrac VectorFrac::copyFrom(VectorFrac &source, unsigned int n) {
 
     unsigned long free;
-    //* Windows
+    /* Windows
     MEMORYSTATUS info;
     GlobalMemoryStatus(&info);
     free = info.dwAvailPhys;
     //*/
 
-    /* Unix
+    //* Unix
     struct sysinfo info;
     sysinfo(&info);
-    free = info.freeramж
+    free = info.freeram;
     //*/
     unsigned long mem = source.vec.size() * sizeof(Frac);
     if (mem > free)
@@ -42,6 +43,22 @@ VectorFrac VectorFrac::copyFrom(VectorFrac &source, unsigned int n) {
     vector<Frac> tmp = source.vec;
     sort(tmp.begin(), tmp.begin()+n);
     return tmp;
+}
+
+void VectorFrac::extendWithFunction(int n, Frac (*generator)(void)) {
+    for (int i=0; i<n; i++) {
+        this->add(generator());
+    }
+}
+
+void VectorFrac::out() {
+    for (auto i=0; i<vec.size(); i++) {
+        cout << vec.at(i) << endl;
+    }
+}
+
+vector<Frac> &VectorFrac::getVec() {
+    return vec;
 }
 //
 //void VectorFrac::addWithFunction(unsigned int n, function func) {

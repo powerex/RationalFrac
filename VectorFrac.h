@@ -5,16 +5,11 @@
 #include "Frac.h"
 #include <algorithm>
 #include <stdio.h>
-//#include <sys/sysinfo.h> // Unix
-#include <Windows.h> // Windows
+#include <sys/sysinfo.h> // Unix
+//#include <Windows.h> // Windows
 #include <functional>
 
 using namespace std;
-
-template <class T>
-T generate() {
-
-}
 
 class VectorFrac {
 private:
@@ -27,8 +22,11 @@ public:
 
     void add(Frac f);
     //void addWithFunction(unsigned int n, function func);
+    void extendWithFunction(int n, Frac (*generator)(void)); // передача функції як параметр через вказівник на функцію
     Frac& operator[] (unsigned int index);
     unsigned long size();
+    void out();
+    vector<Frac>& getVec();
 
     virtual ~VectorFrac();
 };
