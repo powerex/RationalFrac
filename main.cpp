@@ -1,3 +1,4 @@
+#include <ctime>
 #include "Frac.h"
 #include "VectorFrac.h"
 
