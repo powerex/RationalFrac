@@ -88,7 +88,9 @@ VectorFrac<T> VectorFrac<T>::copyFrom(VectorFrac<T> &source, unsigned int n) {
     MEMORYSTATUS info;
     GlobalMemoryStatus(&info);
     free = info.dwAvailPhys;
-#eldif PLATFORM == "linux"
+#endif
+
+#if PLATFORM == "linux"
     struct sysinfo info;
     sysinfo(&info);
     free = info.freeram;
