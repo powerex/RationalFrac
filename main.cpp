@@ -1,13 +1,12 @@
-#include <iostream>
-#include <vector>
 #include "Frac.h"
 #include "VectorFrac.h"
-#include "Functions.h"
 
 using namespace std;
 
+mt19937* gen;
+
 Frac randomFrac() {
-    return Frac(rand()%10, rand()%9+1);
+    return {gen->()%10, static_cast<unsigned int>(gen->() % 9 + 1)};
 }
 //
 //Frac concreteFrac(long n, unsigned int d) {
@@ -15,7 +14,7 @@ Frac randomFrac() {
 //}
 
 int main() {
-    srand(time(NULL));
+    gen = new mt19937(static_cast<unsigned long>(time(nullptr)));
 
     ExtenderFracs concreteFrac(3, 8);
 
@@ -27,13 +26,13 @@ int main() {
     cout << "orig\n";
     vf.out();
 
-//    VectorFrac cvf = VectorFrac::copyFrom(vf, 3);
-//
-//    cout << "orig~\n";
-//    vf.out();
-//
-//    cout << "copy\n";
-//    vf.out();
+    VectorFrac<Frac> cvf = VectorFrac<Frac>::copyFrom(vf, 3);
+
+    cout << "orig~\n";
+    vf.out();
+
+    cout << "copy\n";
+    vf.out();
 
     cout << "\n ===== pointer func ===== \n";
     vf.extendWithFunction(2, randomFrac);
@@ -50,5 +49,6 @@ int main() {
     ext(vf, a1, a2, a3);
     vf.out();
 
+    delete gen;
     return 0;
 }

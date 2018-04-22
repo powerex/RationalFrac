@@ -4,7 +4,7 @@
 #include <vector>
 #include "Frac.h"
 #include <algorithm>
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #include "MemoryLimitException.h"
 #include "Functions.h"
@@ -24,14 +24,15 @@ template <class T>
 class VectorFrac: public Additable<T> {
 private:
     vector<T> vec;
-    VectorFrac(const vector<T> &vec);
+
+    explicit VectorFrac(const vector<T> &vec);
 
 public:
     VectorFrac();
     static VectorFrac copyFrom(VectorFrac& source, unsigned int n);
 
-    void add(T f);
-    void extendWithFunction(int n, T (*generator)(void)); // передача функції як параметр через вказівник на функцію
+    virtual void add(T value);
+    void extendWithFunction(int n, T (*generator)()); // передача функції як параметр через вказівник на функцію
     void extendWithClassFunction(int n, ExtenderFracs extender); // передача функції як параметр через вказівник на функцію
     T& operator[] (unsigned int index);
     unsigned long size();
@@ -42,7 +43,7 @@ public:
 };
 
 template <class T>
-VectorFrac<T>::VectorFrac() {}
+VectorFrac<T>::VectorFrac() = default;
 
 template <class T>
 VectorFrac<T>::VectorFrac(const vector<T> &vec) : vec(vec) {}
@@ -53,8 +54,8 @@ VectorFrac<T>::~VectorFrac() {
 }
 
 template <class T>
-void VectorFrac<T>::add(const T f) {
-    vec.push_back(f);
+void VectorFrac<T>::add(T value) {
+    vec.push_back(value);
 }
 
 template <class T>
@@ -88,7 +89,7 @@ VectorFrac<T> VectorFrac<T>::copyFrom(VectorFrac<T> &source, unsigned int n) {
     //printf("Обсяг доступної пам\'яті: %lu (%lu MB)\n", info.freeram, info.freeram/(1024*1024));
     vector<Frac> tmp = source.vec;
     sort(tmp.begin(), tmp.begin()+n);
-    return tmp;
+    return VectorFrac<Frac>(tmp);
 }
 
 template <class T>
@@ -125,11 +126,11 @@ void ext(VectorFrac<E>& container, const T&... args) {
         container.add(p);
 }
 
-template<typename... T>
-void f(const T&... args) {
-    for (auto&& p : std::initializer_list<Frac>{args...})
-        std::cout <<  p.getNumerator() << '/' << p.getDenomionator() << '\t';
-}
+//template<typename... T>
+//void f(const T&... args) {
+//    for (auto&& p : std::initializer_list<Frac>{args...})
+//        std::cout <<  p.getNumerator() << '/' << p.getDenomionator() << '\t';
+//}
 
 
 #endif //RATIONALFRAC_VECTORFRAC_H

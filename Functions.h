@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <algorithm>
-#include <stdarg.h>
+#include <cstdarg>
 #include <iostream>
 #include "Frac.h"
 
@@ -15,8 +15,8 @@ private:
 public:
     ExtenderFracs(long n, unsigned int d): n(n), d(d) {}
 
-    inline Frac operator()(void) {
-        return Frac(n, d);
+    inline Frac operator()() {
+        return {n, d};
     }
 };
 

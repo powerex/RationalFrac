@@ -30,5 +30,4 @@ public:
     friend ostream& operator<<(ostream& cout, Frac& frac);
 };
 
-
 #endif //RATIONALFRAC_FRAC_H
